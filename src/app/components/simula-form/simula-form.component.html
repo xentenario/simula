@@ -1,0 +1,65 @@
+<div>Simula Entry Form</div>
+
+<form [formGroup]="simulaForm" class="container">
+  <mat-form-field class="item">
+    <mat-label>Panel Area</mat-label>
+    <input matInput type="number" formControlName="panelArea" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Panel Mass</mat-label>
+    <input matInput type="number" formControlName="panelMass" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Panel Efficiency</mat-label>
+    <input matInput type="number" formControlName="panelEfficiency" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Tank Temperature</mat-label>
+    <input matInput type="number" formControlName="tankTemperature" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Tank Mass</mat-label>
+    <input matInput type="number" formControlName="tankMass" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Tank Specific Heat</mat-label>
+    <input matInput type="number" formControlName="waterTankSpecificHeat" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Ambient Temperature</mat-label>
+    <input matInput type="number" formControlName="ambientTemperature" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Panel Specific Heat</mat-label>
+    <input matInput type="number" formControlName="panelSpecificHeat" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Water Mass</mat-label>
+    <input matInput type="number" formControlName="waterMass" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Water Specific Heat</mat-label>
+    <input matInput type="number" formControlName="waterSpecificHeat" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Water Tank Mass</mat-label>
+    <input matInput type="number" formControlName="waterTankMass" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Water Tank Temperature</mat-label>
+    <input matInput type="number" formControlName="waterTankTemperature" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Water Tank Specific Heat</mat-label>
+    <input matInput type="number" formControlName="waterTankSpecificHeat" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Total Time</mat-label>
+    <input matInput type="number" formControlName="totalTime" />
+  </mat-form-field>
+  <mat-form-field class="item">
+    <mat-label>Time Step</mat-label>
+    <input matInput type="number" formControlName="timeStep" />
+  </mat-form-field>
+  <button type="submit" (click)="onCalculateSimulaClick()">Calculate</button>
+</form>
