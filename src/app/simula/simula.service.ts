@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SimulaEntryDataModel } from './simula-data-model';
+import {
+  SimulaEntryDataModel,
+  SimulaResultDataModel,
+} from './simula-data-model';
+import { EMPTY, Observable, map, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SimulaService {
@@ -73,64 +77,62 @@ export class SimulaService {
   }
 
   // Create a method to run the calculations over time
-  public runCalculationsOverTime(data: SimulaEntryDataModel): void {
+  public runCalculationsOverTime(data: SimulaEntryDataModel): Observable<SimulaResultDataModel> {
     let panelTemperature = data.tankTemperature;
     let waterTemperature = data.waterTemperature;
     let waterTankTemperature = data.tankTemperature;
     let tankTemperature = data.tankTemperature;
-    for (let t = 0; t < data.totalTime; t += data.timeStep) {
-      const heatTransferRate = this.calculateHeatTransferRate(
-        data.panelArea,
-        data.panelEfficiency,
-        data.tankTemperature,
-        data.ambientTemperature
-      );
 
-      panelTemperature = this.calculatePanelTemperature(
-        panelTemperature,
-        heatTransferRate,
-        data.panelMass,
-        data.panelSpecificHeat,
-        data.timeStep
-      );
+    const cycles = new Array(data.totalTime / data.timeStep);
+    return of(...cycles).pipe(
+      map(() => {
+        const heatTransferRate = this.calculateHeatTransferRate(
+          data.panelArea,
+          data.panelEfficiency,
+          data.tankTemperature,
+          data.ambientTemperature
+        );
 
-      waterTemperature = this.calculateWaterTemperature(
-        waterTemperature,
-        heatTransferRate,
-        data.waterMass,
-        data.waterSpecificHeat,
-        data.timeStep
-      );
+        panelTemperature = this.calculatePanelTemperature(
+          panelTemperature,
+          heatTransferRate,
+          data.panelMass,
+          data.panelSpecificHeat,
+          data.timeStep
+        );
 
-      waterTankTemperature = this.calculateWaterTankTemperature(
-        waterTankTemperature,
-        heatTransferRate,
-        data.waterTankMass,
-        data.waterTankSpecificHeat,
-        data.timeStep
-      );
+        waterTemperature = this.calculateWaterTemperature(
+          waterTemperature,
+          heatTransferRate,
+          data.waterMass,
+          data.waterSpecificHeat,
+          data.timeStep
+        );
 
-      tankTemperature = this.calculateTankTemperature(
-        data.tankTemperature,
-        heatTransferRate,
-        data.tankMass,
-        data.tankSpecificHeat,
-        data.timeStep
-      );
+        waterTankTemperature = this.calculateWaterTankTemperature(
+          waterTankTemperature,
+          heatTransferRate,
+          data.waterTankMass,
+          data.waterTankSpecificHeat,
+          data.timeStep
+        );
 
-      console.log('RESULTS ===== ');
-      console.log(
-        'heatTransferRate',
-        heatTransferRate,
-        'panelTemperature',
-        panelTemperature,
-        'waterTemperature',
-        waterTemperature,
-        'waterTankTemperature',
-        waterTankTemperature,
-        ' tankTemperature',
-        tankTemperature
-      );
-    }
+        tankTemperature = this.calculateTankTemperature(
+          data.tankTemperature,
+          heatTransferRate,
+          data.tankMass,
+          data.tankSpecificHeat,
+          data.timeStep
+        );
+
+        return {
+          heatTransferRate,
+          panelTemperature,
+          waterTemperature,
+          waterTankTemperature,
+          tankTemperature,
+        }
+      })
+    );
   }
 }

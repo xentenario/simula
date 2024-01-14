@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { DashboardDataSource } from './dashboard-data-source';
 
@@ -17,6 +17,12 @@ export class DataDashboardComponent {
     'waterTankTemperature',
     'tankTemperature',
   ];
-  dataSource = new DashboardDataSource();
+
+  @Input()
+  dataSource!: DashboardDataSource;
+
+
   constructor() {}
+
+
 }
