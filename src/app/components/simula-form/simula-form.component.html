@@ -1,4 +1,4 @@
-<div>Simula Entry Form</div>
+<h2 class="center">Simula Entry Form</h2>
 
 <form [formGroup]="simulaForm" class="container">
   <mat-form-field class="item">
@@ -61,5 +61,8 @@
     <mat-label>Time Step</mat-label>
     <input matInput type="number" formControlName="timeStep" />
   </mat-form-field>
-  <button type="submit" (click)="onCalculateSimulaClick()">Calculate</button>
-</form>
+ </form>
+ <div class="actions">
+   <button type="submit" mat-stroked-button color="primary" (click)="onCalculateSimulaClick()">Calculate</button>
+ </div>
+

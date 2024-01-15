@@ -1,5 +1,7 @@
-<h1>Canvas</h1>
-<div>
-  <simula-form (simulaDataCollected)="onRunSimula($event)"></simula-form>
-  <data-dashboard [dataSource]="simulaData"></data-dashboard>
+<h2 class="center">Simula</h2>
+<div class="container">
+  <simula-form (simulaDataCollected)="onRunSimula($event)" class="form-col"></simula-form>
+  <data-dashboard [dataSource]="simulaData" class="table-col"></data-dashboard>
+  <simula-charts [title]="title" class="graph-col center" [chartData]="chartData" [chartOptions]="chartOptions" [chartType]="chartType"></simula-charts>
 </div>
+

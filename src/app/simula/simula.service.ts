@@ -3,10 +3,11 @@ import {
   SimulaEntryDataModel,
   SimulaResultDataModel,
 } from './simula-data-model';
-import { EMPTY, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subject, map, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SimulaService {
+  simulaData$ = new Subject<SimulaResultDataModel>();
   // Create a method to calculate the heat transfer rate  between a solar panel and a storage tank
   private calculateHeatTransferRate(
     panelArea: number,
@@ -77,62 +78,63 @@ export class SimulaService {
   }
 
   // Create a method to run the calculations over time
-  public runCalculationsOverTime(data: SimulaEntryDataModel): Observable<SimulaResultDataModel> {
+  public runCalculationsOverTime(data: SimulaEntryDataModel): void {
     let panelTemperature = data.tankTemperature;
     let waterTemperature = data.waterTemperature;
     let waterTankTemperature = data.tankTemperature;
     let tankTemperature = data.tankTemperature;
 
-    const cycles = new Array(data.totalTime / data.timeStep);
-    return of(...cycles).pipe(
-      map(() => {
-        const heatTransferRate = this.calculateHeatTransferRate(
-          data.panelArea,
-          data.panelEfficiency,
-          data.tankTemperature,
-          data.ambientTemperature
-        );
+    for (let i = 0; i < data.totalTime / data.timeStep; i++) {
+      const heatTransferRate = this.calculateHeatTransferRate(
+        data.panelArea,
+        data.panelEfficiency,
+        data.tankTemperature,
+        data.ambientTemperature
+      );
 
-        panelTemperature = this.calculatePanelTemperature(
-          panelTemperature,
-          heatTransferRate,
-          data.panelMass,
-          data.panelSpecificHeat,
-          data.timeStep
-        );
+      panelTemperature = this.calculatePanelTemperature(
+        panelTemperature,
+        heatTransferRate,
+        data.panelMass,
+        data.panelSpecificHeat,
+        data.timeStep
+      );
 
-        waterTemperature = this.calculateWaterTemperature(
-          waterTemperature,
-          heatTransferRate,
-          data.waterMass,
-          data.waterSpecificHeat,
-          data.timeStep
-        );
+      waterTemperature = this.calculateWaterTemperature(
+        waterTemperature,
+        heatTransferRate,
+        data.waterMass,
+        data.waterSpecificHeat,
+        data.timeStep
+      );
 
-        waterTankTemperature = this.calculateWaterTankTemperature(
-          waterTankTemperature,
-          heatTransferRate,
-          data.waterTankMass,
-          data.waterTankSpecificHeat,
-          data.timeStep
-        );
+      waterTankTemperature = this.calculateWaterTankTemperature(
+        waterTankTemperature,
+        heatTransferRate,
+        data.waterTankMass,
+        data.waterTankSpecificHeat,
+        data.timeStep
+      );
 
-        tankTemperature = this.calculateTankTemperature(
-          data.tankTemperature,
-          heatTransferRate,
-          data.tankMass,
-          data.tankSpecificHeat,
-          data.timeStep
-        );
+      tankTemperature = this.calculateTankTemperature(
+        data.tankTemperature,
+        heatTransferRate,
+        data.tankMass,
+        data.tankSpecificHeat,
+        data.timeStep
+      );
 
-        return {
-          heatTransferRate,
-          panelTemperature,
-          waterTemperature,
-          waterTankTemperature,
-          tankTemperature,
-        }
-      })
-    );
+      this.simulaData$.next({
+        heatTransferRate: this.roundToTwo(heatTransferRate),
+        panelTemperature: this.roundToTwo(panelTemperature),
+        waterTemperature: this.roundToTwo(waterTemperature),
+        waterTankTemperature:this.roundToTwo(waterTankTemperature),
+        tankTemperature:this.roundToTwo(tankTemperature),
+      });
+    }
+  }
+
+  private roundToTwo(num: number): number {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }

@@ -3,13 +3,14 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SimulaEntryDataModel } from '../../simula/simula-data-model';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'simula-form',
   templateUrl: './simula-form.component.html',
   styleUrls: ['./simula-form.component.scss'],
   standalone: true,
-  imports: [MatInputModule, ReactiveFormsModule, MatFormFieldModule],
+  imports: [MatInputModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule],
 })
 export class SimulaFormComponent {
   simulaForm: FormGroup;
