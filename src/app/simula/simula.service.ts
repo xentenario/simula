@@ -1,3 +1,8 @@
+
+/**
+ * SimulaService is a service that provides methods for calculating heat transfer and temperature changes in a solar panel and storage tank system.
+ */
+
 import { Injectable } from '@angular/core';
 import {
   SimulaEntryDataModel,
