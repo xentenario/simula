@@ -1,3 +1,9 @@
+/**
+  SIMULA FORM COMPONENT
+  Simula form component is used to collect data from user and emit it to parent component
+*/
+
+
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';

@@ -1,3 +1,7 @@
+/**
+  This file contains the data models for the Simula component.
+*/
+
 export interface SimulaResultDataModel {
   heatTransferRate: number;
   panelTemperature: number;

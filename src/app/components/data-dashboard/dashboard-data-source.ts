@@ -1,7 +1,14 @@
+/**
+ * Data source for the dashboard table
+ * Mat-Table will use this data source to retrieve the data to display.
+ * This is a custom data source that extends from DataSource.
+ * It is used to provide the data to the table, using the simula service.
+ * By separating the table from its datasource we can make the table component reusable.
+ * and apply data transformations to the data before it is displayed.
+ */
 import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, Observable, of, scan } from 'rxjs';
+import { BehaviorSubject,  scan } from 'rxjs';
 import {
-  SimulaEntryDataModel,
   SimulaResultDataModel,
 } from '../../simula/simula-data-model';
 import { SimulaService } from '../../simula/simula.service';

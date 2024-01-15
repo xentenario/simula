@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
-import { Chart, ChartConfiguration, ChartType } from 'chart.js/auto';
+/**
+ * GENERIC COMPONENT TO GENERATE CHARTS
+ */
+
+import { Component, Input } from '@angular/core';
+import { ChartConfiguration, ChartType } from 'chart.js/auto';
 import { NgChartsModule } from 'ng2-charts';
-import { SimulaService } from '../../simula/simula.service';
-import { SimulaResultDataModel } from '../../simula/simula-data-model';
-import { scan } from 'rxjs';
+
 
 @Component({
   selector: 'simula-charts',

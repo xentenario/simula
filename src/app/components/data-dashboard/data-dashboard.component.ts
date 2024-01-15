@@ -1,4 +1,7 @@
-import { Component, Input, ViewChild } from '@angular/core';
+/**
+ * Displays Simulation Data in a table
+ */
+import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { DashboardDataSource } from './dashboard-data-source';
 
